@@ -1,5 +1,7 @@
 package cn.springmvc.test;
 
+import cn.springmvc.dao.ImageDao;
+import cn.springmvc.model.Image;
 import cn.springmvc.model.User;
 import cn.springmvc.service.UserService;
 import org.junit.Before;
@@ -19,6 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class UserTest {
 
     private UserService userService ;
+    private ImageDao imageDao ;
 
     @Before
     public void before(){
@@ -26,6 +29,7 @@ public class UserTest {
         ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"classpath:conf/spring.xml"
                 ,"classpath:conf/spring-mybatis.xml"});
         userService = (UserService) context.getBean("userServiceImpl");
+        imageDao = (ImageDao) context.getBean("imageDao");
     }
 
     @Test
@@ -34,5 +38,13 @@ public class UserTest {
         user.setNickname("你好");
         user.setState(2);
         System.out.println(userService.insertUser(user));
+    }
+
+    @Test
+    public void addImage(){
+        Image image = new Image();
+        image.setImageName("美女");
+        image.setImagePath("c:\\");
+        System.out.println(imageDao.addImage(image));
     }
 }
